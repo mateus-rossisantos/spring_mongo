@@ -19,10 +19,15 @@ import java.util.List;
 @Document(collection = "usuario")
 public class Usuario implements UserDetails {
     @Id
-    private int id;
+    private Long id;
     private String nome;
     private String password;
     private List<Perfil> perfis;
+
+    public Usuario(String nome, String password) {
+        this.nome = nome;
+        this.password = password;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

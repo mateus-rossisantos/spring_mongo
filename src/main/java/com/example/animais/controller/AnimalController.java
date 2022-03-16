@@ -32,12 +32,10 @@ public class AnimalController {
             return ResponseEntity.created(uri).build();
         }
         return ResponseEntity.badRequest().build();
-
-
     }
 
     @GetMapping
-    public Page<Animal> getAnimal(Pageable pageable){
+    public Page<Animal> getAnimal(@RequestParam(required = false) Pageable pageable){
         return animalRepository.findAll(pageable);
     }
 

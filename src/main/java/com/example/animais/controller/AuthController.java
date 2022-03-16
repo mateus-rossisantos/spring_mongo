@@ -1,5 +1,6 @@
 package com.example.animais.controller;
 
+import com.example.animais.dto.TokenDto;
 import com.example.animais.model.Usuario;
 import com.example.animais.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,12 @@ public class AuthController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<?> autenticar(@RequestBody Usuario usuario){
+    public ResponseEntity<TokenDto> autenticar(@RequestBody Usuario usuario){
         UsernamePasswordAuthenticationToken dados = usuario.converter();
         try {
             Authentication authentication = authManager.authenticate(dados);
             String token = tokenService.gerarToken(authentication);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(new TokenDto(token, "Bearer"));
         } catch (AuthenticationException e){
             return ResponseEntity.badRequest().build();
         }

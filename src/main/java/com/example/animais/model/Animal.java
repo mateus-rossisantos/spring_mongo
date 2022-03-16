@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "animal")
 public class Animal {
     @Id
-    private int id;
+    private Long id;
     private String nome;
     private String raca;
 

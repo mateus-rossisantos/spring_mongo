@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -28,6 +29,7 @@ public class UserController {
     public ResponseEntity<Usuario> postUsuario(@RequestBody Usuario usuario, UriComponentsBuilder uriBuilder){
         Optional<Usuario> usuarioOptional = usuarioRepository.findById((usuario.getId()));
         if (usuarioOptional.isEmpty()){
+            usuario.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
             usuarioRepository.save(usuario);
             URI uri = uriBuilder.path("usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
             return ResponseEntity.created(uri).build();
