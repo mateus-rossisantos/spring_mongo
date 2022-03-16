@@ -3,7 +3,10 @@ package com.example.animais.controller;
 import com.example.animais.model.Animal;
 import com.example.animais.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -23,7 +26,7 @@ public class AnimalController {
     @Transactional
     public ResponseEntity<Animal> postAnimal(@RequestBody Animal animal, UriComponentsBuilder uriBuilder){
         Optional<Animal> animalOptional = animalRepository.findById(animal.getId());
-        if (!animalOptional.isPresent()){
+        if (animalOptional.isEmpty()){
             animalRepository.save(animal);
             URI uri = uriBuilder.path("animais/{id}").buildAndExpand(animal.getId()).toUri();
             return ResponseEntity.created(uri).build();
@@ -34,8 +37,8 @@ public class AnimalController {
     }
 
     @GetMapping
-    public List<Animal> getAnimal(){
-        return animalRepository.findAll();
+    public Page<Animal> getAnimal(Pageable pageable){
+        return animalRepository.findAll(pageable);
     }
 
     @GetMapping("/{id}")
@@ -60,7 +63,7 @@ public class AnimalController {
         Optional<Animal> animalOptional = animalRepository.findById(id);
         if (animalOptional.isPresent()) {
             animalRepository.deleteById(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
