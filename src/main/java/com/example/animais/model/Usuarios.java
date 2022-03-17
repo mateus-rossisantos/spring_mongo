@@ -1,12 +1,13 @@
 package com.example.animais.model;
 
+import com.mongodb.lang.Nullable;
 import lombok.*;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,17 +15,16 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@ToString
 @Document(collection = "usuario")
-public class Usuario implements UserDetails {
+public class Usuarios implements UserDetails {
     @Id
-    private Long id;
+    private String id;
     private String nome;
     private String password;
-    private List<Perfil> perfis;
+    private List<Perfis> perfis;
 
-    public Usuario(String nome, String password) {
+    public Usuarios(String nome, String password) {
         this.nome = nome;
         this.password = password;
     }

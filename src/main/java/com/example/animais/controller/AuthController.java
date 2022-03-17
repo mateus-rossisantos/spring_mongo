@@ -1,7 +1,8 @@
 package com.example.animais.controller;
 
+import com.example.animais.controller.api.AuthApi;
 import com.example.animais.dto.TokenDto;
-import com.example.animais.model.Usuario;
+import com.example.animais.model.Usuarios;
 import com.example.animais.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
+public class AuthController implements AuthApi {
 
     @Autowired
     private AuthenticationManager authManager;
@@ -25,8 +26,9 @@ public class AuthController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<TokenDto> autenticar(@RequestBody Usuario usuario){
+    public ResponseEntity<TokenDto> autenticar(@RequestBody Usuarios usuario){
         UsernamePasswordAuthenticationToken dados = usuario.converter();
+        System.out.println(dados.getName() + " | " + dados.getPrincipal());
         try {
             Authentication authentication = authManager.authenticate(dados);
             String token = tokenService.gerarToken(authentication);

@@ -1,6 +1,6 @@
 package com.example.animais.service;
 
-import com.example.animais.model.Usuario;
+import com.example.animais.model.Usuarios;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -22,12 +21,12 @@ public class TokenService {
 
 
     public String gerarToken(Authentication authentication) {
-        Usuario usuario = (Usuario) authentication.getPrincipal();
+        Usuarios usuario = (Usuarios) authentication.getPrincipal();
         Date hoje = new Date();
         Date dataExpiration = new Date(hoje.getTime() + Long.parseLong(expiration));
         return Jwts.builder()
                 .setIssuer("API teste spring + mongo")
-                .setSubject(usuario.getId().toString())
+                .setSubject(usuario.getId())
                 .setIssuedAt(hoje)
                 .setExpiration(dataExpiration)
                 .signWith(SignatureAlgorithm.HS256, secret)
@@ -43,8 +42,8 @@ public class TokenService {
         }
     }
 
-    public Long getIdUser(String token) {
+    public String getIdUser(String token) {
         Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
-        return Long.parseLong(claims.getSubject());
+        return claims.getSubject();
     }
 }

@@ -1,14 +1,13 @@
 package com.example.animais.controller;
 
-import com.example.animais.model.Animal;
-import com.example.animais.model.Usuario;
-import com.example.animais.repository.AnimalRepository;
+import com.example.animais.controller.api.UsuarioApi;
+import com.example.animais.model.Usuarios;
 import com.example.animais.repository.UsuarioRepository;
+import com.example.animais.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -19,39 +18,33 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UserController {
+public class UserController implements UsuarioApi {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Usuario> postUsuario(@RequestBody Usuario usuario, UriComponentsBuilder uriBuilder){
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById((usuario.getId()));
-        if (usuarioOptional.isEmpty()){
-            usuario.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
-            usuarioRepository.save(usuario);
-            URI uri = uriBuilder.path("usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
-            return ResponseEntity.created(uri).build();
-        }
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity<Usuarios> postUsuario(@RequestBody Usuarios usuario, UriComponentsBuilder uriBuilder){
+
+        return usuarioService.saveUsuario(usuario, uriBuilder);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuario(@PathVariable int id){
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
-        return usuarioOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Usuarios> getUsuario(@PathVariable String id){
+
+        return usuarioService.getUsuario(id);
+    }
+
+    @GetMapping
+    public Page<Usuarios> getUsuarios(Pageable pageable){
+        return usuarioService.findAll(pageable);
     }
 
     @DeleteMapping("{id}")
     @Transactional
-    public ResponseEntity<?> deleteUsuario(@PathVariable int id){
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
-        if (usuarioOptional.isPresent()) {
-            usuarioRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<?> deleteUsuario(@PathVariable String id){
+        return usuarioService.deleteUsuario(id);
     }
 
 

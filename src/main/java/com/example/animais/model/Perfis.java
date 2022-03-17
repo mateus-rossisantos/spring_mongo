@@ -8,10 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Document(collection = "perfis")
-public class Perfil implements GrantedAuthority {
+public class Perfis implements GrantedAuthority {
 
     @Id
     private Long id;

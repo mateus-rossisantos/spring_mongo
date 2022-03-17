@@ -1,13 +1,11 @@
 package com.example.animais.repository;
 
-import com.example.animais.model.Animal;
-import com.example.animais.model.Usuario;
+import com.example.animais.model.Usuarios;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface UsuarioRepository extends MongoRepository<Usuario, Integer> {
-    Optional<Usuario> findByNome(String nome);
-
-    Optional<Usuario> findById(Long id);
+public interface UsuarioRepository extends MongoRepository<Usuarios, String> {
+    Optional<Usuarios> findByNome(String nome);
 }
