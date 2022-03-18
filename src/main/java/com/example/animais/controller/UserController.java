@@ -1,6 +1,8 @@
 package com.example.animais.controller;
 
 import com.example.animais.controller.api.UsuarioApi;
+import com.example.animais.dto.UsuarioRetornoDTO;
+import com.example.animais.dto.UsuariosDTO;
 import com.example.animais.model.Usuarios;
 import com.example.animais.repository.UsuarioRepository;
 import com.example.animais.service.UsuarioService;
@@ -25,19 +27,18 @@ public class UserController implements UsuarioApi {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Usuarios> postUsuario(@RequestBody Usuarios usuario, UriComponentsBuilder uriBuilder){
-
-        return usuarioService.saveUsuario(usuario, uriBuilder);
+    public ResponseEntity<Usuarios> postUsuario(@RequestBody UsuariosDTO usuariosDTO, UriComponentsBuilder uriBuilder){
+        return usuarioService.saveUsuario(usuariosDTO, uriBuilder);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuarios> getUsuario(@PathVariable String id){
+    public ResponseEntity<UsuarioRetornoDTO> getUsuario(@PathVariable String id){
 
         return usuarioService.getUsuario(id);
     }
 
     @GetMapping
-    public Page<Usuarios> getUsuarios(Pageable pageable){
+    public Page<UsuarioRetornoDTO> getUsuarios(Pageable pageable){
         return usuarioService.findAll(pageable);
     }
 

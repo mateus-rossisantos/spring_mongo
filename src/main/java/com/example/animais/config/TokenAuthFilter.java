@@ -43,7 +43,6 @@ public class TokenAuthFilter extends OncePerRequestFilter {
     private String getToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         boolean tokenNaoExiste = (token == null || !token.startsWith("Bearer "));
-        if (tokenNaoExiste) return null;
-        return token.substring(7);
+        return tokenNaoExiste ? null : token.substring(7);
     }
 }

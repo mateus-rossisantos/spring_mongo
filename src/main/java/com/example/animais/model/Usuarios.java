@@ -59,7 +59,5 @@ public class Usuarios implements UserDetails {
         return true;
     }
 
-    public UsernamePasswordAuthenticationToken converter() {
-        return new UsernamePasswordAuthenticationToken(nome, password);
-    }
+
 }

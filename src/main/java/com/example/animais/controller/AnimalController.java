@@ -1,6 +1,7 @@
 package com.example.animais.controller;
 
 import com.example.animais.controller.api.AnimaisApi;
+import com.example.animais.dto.AnimaisDTO;
 import com.example.animais.model.Animais;
 import com.example.animais.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,12 @@ public class AnimalController implements AnimaisApi {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Animais> postAnimal(@RequestBody Animais animal, UriComponentsBuilder uriBuilder){
-            return animalService.save(animal, uriBuilder);
+    public ResponseEntity<Animais> postAnimal(@RequestBody AnimaisDTO animalDto, UriComponentsBuilder uriBuilder){
+            return animalService.save(animalDto, uriBuilder);
     }
 
     @GetMapping
-    public Page<Animais> getAnimal(Pageable pageable){
+    public Page<Animais> getAnimais(Pageable pageable){
         return animalService.findAll(pageable);
     }
 
@@ -35,8 +36,8 @@ public class AnimalController implements AnimaisApi {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Animais> replaceAnimal(@RequestBody Animais animal, @PathVariable String id) {
-        return animalService.replaceAnimal(animal, id);
+    public ResponseEntity<Animais> replaceAnimal(@RequestBody AnimaisDTO animalDto, @PathVariable String id) {
+        return animalService.replaceAnimal(animalDto, id);
     }
 
     @DeleteMapping("{id}")
