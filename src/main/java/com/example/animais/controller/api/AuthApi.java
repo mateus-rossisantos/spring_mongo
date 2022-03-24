@@ -2,8 +2,6 @@ package com.example.animais.controller.api;
 
 import com.example.animais.dto.TokenDTO;
 import com.example.animais.dto.UsuarioLoginDto;
-import com.example.animais.dto.UsuariosDTO;
-import com.example.animais.model.Usuarios;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;

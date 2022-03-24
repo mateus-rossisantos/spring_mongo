@@ -3,7 +3,7 @@ package com.example.animais.controller.api;
 
 import com.example.animais.dto.UsuarioRetornoDTO;
 import com.example.animais.dto.UsuariosDTO;
-import com.example.animais.model.Usuarios;
+import com.example.animais.model.Usuario;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @RequestMapping("/usuarios")
@@ -32,7 +31,7 @@ public interface UsuarioApi {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
     })
     @PostMapping
-    ResponseEntity<Usuarios> postUsuario(@RequestBody UsuariosDTO usuariosDTO, UriComponentsBuilder uriBuilder);
+    ResponseEntity<Usuario> postUsuario(@RequestBody UsuariosDTO usuariosDTO);
 
     @Operation(summary = "Mostra um usuario",
             parameters = {

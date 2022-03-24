@@ -1,6 +1,6 @@
 package com.example.animais.config;
 
-import com.example.animais.model.Usuarios;
+import com.example.animais.model.Usuario;
 import com.example.animais.repository.UsuarioRepository;
 import com.example.animais.service.TokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 public class TokenAuthFilter extends OncePerRequestFilter {
 
@@ -34,10 +35,13 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
     private void authUser(String token) {
         String idUsuario = tokenService.getIdUser(token);
-        Usuarios usuario = userRepository.findById(idUsuario).get();
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario,
-                    null, usuario.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Optional<Usuario> usuario = userRepository.findById(idUsuario);
+        if (usuario.isPresent()){
+            Usuario usuarioPresent = usuario.get();
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario,
+                    null, usuarioPresent.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
     }
 
     private String getToken(HttpServletRequest request) {

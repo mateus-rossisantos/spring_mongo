@@ -2,7 +2,7 @@ package com.example.animais.controller.api;
 
 
 import com.example.animais.dto.AnimaisDTO;
-import com.example.animais.model.Animais;
+import com.example.animais.model.Animal;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @RequestMapping("/animais")
@@ -33,7 +32,7 @@ public interface AnimaisApi {
     })
     @PostMapping
     @Transactional
-    ResponseEntity<Animais> postAnimal(@RequestBody AnimaisDTO animaisDTO, UriComponentsBuilder uriBuilder);
+    ResponseEntity<Animal> postAnimal(@RequestBody AnimaisDTO animaisDTO);
 
     @Operation(summary = "Lista os animais")
     @ApiResponses(value = {
@@ -43,7 +42,7 @@ public interface AnimaisApi {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
     })
     @GetMapping
-    Page<Animais> getAnimais(Pageable pageable);
+    Page<Animal> getAnimais(Pageable pageable);
 
     @Operation(summary = "Mostra um animal",
             parameters = {
@@ -56,7 +55,7 @@ public interface AnimaisApi {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
     })
     @GetMapping("/{id}")
-    ResponseEntity<Animais> getAnimal(@PathVariable String id);
+    ResponseEntity<Animal> getAnimal(@PathVariable String id);
 
     @Operation(summary = "Altera um animal",
             parameters = {
@@ -71,7 +70,7 @@ public interface AnimaisApi {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
     })
     @PutMapping("{id}")
-    ResponseEntity<Animais> replaceAnimal(@RequestBody AnimaisDTO animaisDto, @PathVariable String id);
+    ResponseEntity<Animal> replaceAnimal(@RequestBody AnimaisDTO animaisDto, @PathVariable String id);
 
     @Operation(summary = "Deleta um animal",
             parameters = {

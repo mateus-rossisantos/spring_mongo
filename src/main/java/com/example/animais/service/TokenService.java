@@ -1,6 +1,6 @@
 package com.example.animais.service;
 
-import com.example.animais.model.Usuarios;
+import com.example.animais.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,7 +21,7 @@ public class TokenService {
 
 
     public String gerarToken(Authentication authentication) {
-        Usuarios usuario = (Usuarios) authentication.getPrincipal();
+        Usuario usuario = (Usuario) authentication.getPrincipal();
         Date hoje = new Date();
         Date dataExpiration = new Date(hoje.getTime() + Long.parseLong(expiration));
         return Jwts.builder()

@@ -1,12 +1,9 @@
 package com.example.animais.dto;
 
-import com.example.animais.model.Perfis;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor

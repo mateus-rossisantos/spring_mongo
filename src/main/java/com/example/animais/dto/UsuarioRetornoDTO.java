@@ -1,12 +1,10 @@
 package com.example.animais.dto;
 
-import com.example.animais.model.Usuarios;
+import com.example.animais.model.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
-
-import java.util.function.Function;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +13,7 @@ public class UsuarioRetornoDTO {
     private String id;
     private String nome;
 
-    public Page<UsuarioRetornoDTO> conversorPage(Page<Usuarios> pageUsuarios) {
+    public Page<UsuarioRetornoDTO> conversorPage(Page<Usuario> pageUsuarios) {
         return pageUsuarios.map(usuarios -> {
             UsuarioRetornoDTO dto = new UsuarioRetornoDTO();
             dto.setId(usuarios.getId());

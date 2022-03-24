@@ -3,8 +3,6 @@ package com.example.animais.controller;
 import com.example.animais.controller.api.AuthApi;
 import com.example.animais.dto.TokenDTO;
 import com.example.animais.dto.UsuarioLoginDto;
-import com.example.animais.dto.UsuariosDTO;
-import com.example.animais.model.Usuarios;
 import com.example.animais.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +28,6 @@ public class AuthController implements AuthApi {
     @PostMapping
     public ResponseEntity<TokenDTO> autenticar(@RequestBody UsuarioLoginDto usuarioLoginDto){
         UsernamePasswordAuthenticationToken dados = usuarioLoginDto.converter();
-        System.out.println(dados.getName() + " | " + dados.getPrincipal());
         try {
             Authentication authentication = authManager.authenticate(dados);
             String token = tokenService.gerarToken(authentication);
